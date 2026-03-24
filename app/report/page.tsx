@@ -176,12 +176,11 @@ export default function ReportPage() {
       styles: {
         fontSize: 7,
         cellPadding: 2.5,
-        fillColor: C.card,           // zinc-900 [24,24,27]
-        textColor: C.text,           // zinc-50  [250,250,250] — max contrast
+        fillColor: C.card,
+        textColor: C.text,
         lineColor: C.border,
         lineWidth: 0.15,
         overflow: "linebreak" as const,
-        cellWidth: "wrap" as const,
       },
       headStyles: {
         fillColor: C.surf2,          // zinc-800 [39,39,42]
@@ -232,6 +231,13 @@ export default function ReportPage() {
           f.anomaly!.message,
         ]),
         ...tableStyles,
+        columnStyles: {
+          0: { cellWidth: 16 },   // Time
+          1: { cellWidth: 28 },   // Type
+          2: { cellWidth: 18 },   // Severity
+          3: { cellWidth: 14 },   // Value
+          4: { cellWidth: "auto" }, // Message — takes remaining width
+        },
         didParseCell: (data: any) => {
           if (data.section === "body" && data.column.index === 2) {
             data.cell.styles.textColor =
@@ -259,6 +265,13 @@ export default function ReportPage() {
             c.id, c.name, c.status.toUpperCase(), c.requirement_id, c.message ?? "",
           ]),
           ...tableStyles,
+          columnStyles: {
+            0: { cellWidth: 16 },   // ID
+            1: { cellWidth: 40 },   // Test case name
+            2: { cellWidth: 14 },   // Status
+            3: { cellWidth: 16 },   // Req
+            4: { cellWidth: "auto" }, // Notes — takes remaining width
+          },
           didParseCell: (data: any) => {
             if (data.section === "body" && data.column.index === 2) {
               data.cell.styles.textColor =
@@ -279,11 +292,18 @@ export default function ReportPage() {
       head: [["ID", "Title", "Type", "Priority", "Status"]],
       body: reqs.map((r: any) => [r.id, r.title, r.type, r.priority, r.status]),
       ...tableStyles,
+      columnStyles: {
+        0: { cellWidth: 16 },   // ID
+        1: { cellWidth: "auto" }, // Title — takes remaining width
+        2: { cellWidth: 22 },   // Type
+        3: { cellWidth: 18 },   // Priority
+        4: { cellWidth: 20 },   // Status
+      },
       didParseCell: (data: any) => {
         if (data.section === "body" && data.column.index === 4) {
           data.cell.styles.textColor =
             data.cell.raw === "verified" ? C.green :
-              data.cell.raw === "partial" ? C.amber : C.muted
+              data.cell.raw === "partial" ? C.amber : C.textDim
         }
       },
     })

@@ -76,7 +76,7 @@ export default function ReportPage() {
     const kv = (label: string, value: string, valueColor = C.text) => {
       doc.setFontSize(8)
       doc.setFont("helvetica", "normal")
-      doc.setTextColor(...C.muted)
+      doc.setTextColor(...C.textDim)   // zinc-400 [161,161,170] — readable label
       doc.text(label, m + 2, y)
       doc.setTextColor(...valueColor)
       doc.text(value, m + 60, y)
@@ -120,7 +120,7 @@ export default function ReportPage() {
 
     // Meta
     doc.setFontSize(8)
-    doc.setTextColor(...C.muted)
+    doc.setTextColor(...C.textDim)
     doc.text(`Generated:  ${new Date().toISOString()}`, m + 6, 78)
     doc.text(`Frames:     ${frames.length}`, m + 6, 85)
     doc.text(`Duration:   ${summary?.time_of_flight?.toFixed(1)}s`, m + 6, 92)
@@ -169,25 +169,31 @@ export default function ReportPage() {
     }
 
     // autoTable dark theme shared styles
+    // Body text uses C.text (zinc-50 = [250,250,250]) for maximum contrast on dark rows.
+    // Alternate rows use a slightly lighter zinc-800 so the distinction is visible
+    // without killing readability. Header uses surf2 bg with white bold text.
     const tableStyles = {
       styles: {
         fontSize: 7,
         cellPadding: 2.5,
-        fillColor: C.card,
-        textColor: C.textDim,
+        fillColor: C.card,           // zinc-900 [24,24,27]
+        textColor: C.text,           // zinc-50  [250,250,250] — max contrast
         lineColor: C.border,
         lineWidth: 0.15,
+        overflow: "linebreak" as const,
+        cellWidth: "wrap" as const,
       },
       headStyles: {
-        fillColor: C.surf2,
-        textColor: C.text,
+        fillColor: C.surf2,          // zinc-800 [39,39,42]
+        textColor: C.text,           // white
         fontStyle: "bold" as const,
         fontSize: 7,
         lineColor: C.border,
         lineWidth: 0.15,
       },
       alternateRowStyles: {
-        fillColor: [18, 18, 20] as [number, number, number],
+        fillColor: [32, 32, 36] as [number, number, number], // subtle zinc-850 — visible but not jarring
+        textColor: C.text,
       },
       margin: { left: m, right: m },
       // Fires before cells are painted on every page (including overflow pages)
@@ -243,7 +249,7 @@ export default function ReportPage() {
         if (y > 250) { doc.addPage(); fillBg(); y = m + 4 }
         doc.setFontSize(7.5)
         doc.setFont("helvetica", "bold")
-        doc.setTextColor(...C.textDim)
+        doc.setTextColor(...C.text)
         doc.text(suite.name, m + 2, y)
         y += 4
         autoTable(doc, {

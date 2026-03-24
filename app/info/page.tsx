@@ -148,7 +148,7 @@ const sections = [
         content: (
             <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                    The trajectory engine (<code className="mono text-xs bg-secondary px-1 py-0.5 rounded">api/engine.py</code>) implements 6-DOF equations of motion using NumPy. It's a pure function — config in, frames out — with no state, no database, and no side effects. It runs as a Vercel Python serverless function in production.
+                    The trajectory engine (<code className="mono text-xs bg-secondary px-1 py-0.5 rounded">lib/engine.ts</code>) implements 6-DOF equations of motion in pure TypeScript — no dependencies, no external calls. It's a pure function: config in, frames out, with no state and no side effects. It runs directly inside the Next.js API route on Vercel.
                 </p>
                 <div className="rounded-md border border-border bg-card p-3 space-y-1.5">
                     <p className="text-xs font-medium text-foreground uppercase tracking-widest">What it computes per frame</p>
@@ -191,15 +191,15 @@ const sections = [
                     <p className="pl-4 text-muted-foreground">↕ REST (JSON)     ↕ REST (JSON)     static     client-side</p>
                     <p className="pl-4 text-muted-foreground">/api/telemetry   /api/test-run    reqs.json  jsPDF</p>
                     <p className="pl-8 text-muted-foreground">↓                      ↓</p>
-                    <p className="pl-4 text-foreground">api/engine.py — 6-DOF physics (Python + NumPy)</p>
-                    <p className="pl-8 text-muted-foreground">pure function · no DB · Vercel serverless</p>
+                    <p className="pl-4 text-foreground">lib/engine.ts — 6-DOF physics (pure TypeScript)</p>
+                    <p className="pl-8 text-muted-foreground">pure function · no DB · runs inside Next.js API route</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     {[
                         ["Frontend", "Next.js 14, React, Tailwind, shadcn/ui"],
                         ["3D viewer", "Three.js via React Three Fiber"],
                         ["Charts", "Recharts"],
-                        ["Physics", "Python + NumPy (Vercel serverless)"],
+                        ["Physics", "TypeScript — pure function in lib/engine.ts"],
                         ["PDF", "jsPDF + jsPDF-AutoTable (client-side)"],
                         ["Deploy", "Vercel (zero config)"],
                         ["Local dev", "Docker Compose (Next.js + Python)"],

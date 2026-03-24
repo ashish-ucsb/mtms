@@ -20,10 +20,21 @@ export async function GET(req: NextRequest) {
     action: "simulate",
   }
 
-  const engineUrl = process.env.PYTHON_ENGINE_URL ?? "http://localhost:8000"
+  // Priority order for engine URL:
+  // 1. PYTHON_ENGINE_URL — set in docker-compose for local dev (http://engine:8000)
+  // 2. VERCEL_URL        — auto-set by Vercel for the current deployment
+  // 3. Derived from request host — fallback
+  let engineBase: string
+  if (process.env.PYTHON_ENGINE_URL) {
+    engineBase = process.env.PYTHON_ENGINE_URL
+  } else if (process.env.VERCEL_URL) {
+    engineBase = `https://${process.env.VERCEL_URL}/api/engine`
+  } else {
+    engineBase = `${req.nextUrl.protocol}//${req.nextUrl.host}/api/engine`
+  }
 
   try {
-    const engineRes = await fetch(engineUrl, {
+    const engineRes = await fetch(engineBase, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(config),

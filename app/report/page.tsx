@@ -162,6 +162,12 @@ export default function ReportPage() {
     // ── Page 2+ ───────────────────────────────────────────────────────────
     doc.addPage(); fillBg(); y = m + 4
 
+    // Fill background on every page autoTable touches (including overflow pages)
+    const drawPageBg = () => {
+      doc.setFillColor(...C.bg)
+      doc.rect(0, 0, W, H, "F")
+    }
+
     // autoTable dark theme shared styles
     const tableStyles = {
       styles: {
@@ -184,6 +190,8 @@ export default function ReportPage() {
         fillColor: [18, 18, 20] as [number, number, number],
       },
       margin: { left: m, right: m },
+      // Fires before cells are painted on every page (including overflow pages)
+      willDrawPage: () => { drawPageBg() },
     }
 
     // 1. Flight Summary
@@ -274,12 +282,14 @@ export default function ReportPage() {
       },
     })
 
-    // Page numbers
+    // Page numbers — also ensure every page has dark bg in case any slipped through
     const pageCount = (doc.internal as any).getNumberOfPages()
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i)
+      // Re-fill bg on every page (no-op if already dark, safety net for any missed pages)
+      // Only fill behind the footer strip — painting full page here would cover table content
       doc.setFillColor(...C.bg)
-      doc.rect(0, H - 8, W, 8, "F")
+      doc.rect(0, H - 9, W, 9, "F")
       doc.setTextColor(...C.border)
       doc.setFontSize(6.5)
       doc.setFont("helvetica", "normal")

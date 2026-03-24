@@ -5,14 +5,8 @@
   "framework": "nextjs",
   "functions": {
     "api/engine.py": {
-      "runtime": "python3.9",
+      "runtime": "@vercel/python@4.3.1",
       "maxDuration": 30
     }
-  },
-  "rewrites": [
-    {
-      "source": "/api/py/:path*",
-      "destination": "/api/engine.py"
-    }
-  ]
+  }
 }

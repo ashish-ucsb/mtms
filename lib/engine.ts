@@ -1,7 +1,6 @@
 /**
  * Trajectory engine — TypeScript port of api/engine.py
  * Pure function, no dependencies. Runs in Next.js serverless on Vercel.
- * Also used locally — eliminates the Python subprocess entirely.
  */
 
 export interface SimFrame {

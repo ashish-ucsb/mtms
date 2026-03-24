@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PYTHON_ENGINE_URL=http://engine:8000
+    depends_on:
+      engine:
+        condition: service_healthy
+
+  engine:
+    image: python:3.9-slim
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    command: >
+      sh -c "pip install -q fastapi uvicorn numpy &&
+             uvicorn engine:app --host 0.0.0.0 --port 8000 --reload --log-level warning"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 1000s
+      timeout: 5s
+      retries: 1
+      start_period: 25s

@@ -1,0 +1,127 @@
+[
+  {
+    "id": "REQ-001",
+    "title": "Real-time telemetry acquisition",
+    "description": "The system shall acquire and record position, velocity, acceleration, and body attitude data at a minimum rate of 10 Hz during active flight.",
+    "type": "functional",
+    "priority": "shall",
+    "test_ids": [
+      "TC-001",
+      "TC-002"
+    ],
+    "status": "verified",
+    "source": "Data acquisition and recording"
+  },
+  {
+    "id": "REQ-002",
+    "title": "Trajectory reconstruction",
+    "description": "The system shall compute and display a 3D trajectory reconstruction from raw telemetry, including downrange distance, crossrange deviation, and altitude as a function of time.",
+    "type": "functional",
+    "priority": "shall",
+    "test_ids": [
+      "TC-003"
+    ],
+    "status": "verified",
+    "source": "Position as a function of time"
+  },
+  {
+    "id": "REQ-003",
+    "title": "Performance characteristic computation",
+    "description": "The system shall derive and report performance characteristics including maximum range, peak speed, time of flight, maximum altitude, and apogee time.",
+    "type": "performance",
+    "priority": "shall",
+    "test_ids": [
+      "TC-004",
+      "TC-005",
+      "TC-004b",
+      "TC-005b"
+    ],
+    "status": "verified",
+    "source": "Range, speed, time of flight, altitude"
+  },
+  {
+    "id": "REQ-004",
+    "title": "Anomaly detection and alerting",
+    "description": "The system shall detect and flag anomalous telemetry conditions including altitude threshold breaches, excessive dynamic pressure, attitude deviations exceeding 15 degrees, and speed limit violations.",
+    "type": "safety",
+    "priority": "shall",
+    "test_ids": [
+      "TC-006",
+      "TC-007"
+    ],
+    "status": "verified",
+    "source": "Maintenance and status logging"
+  },
+  {
+    "id": "REQ-005",
+    "title": "Test suite execution",
+    "description": "The system shall execute a configurable suite of automated validation tests against telemetry data and report pass/fail status per test case with actual versus expected values.",
+    "type": "functional",
+    "priority": "shall",
+    "test_ids": [
+      "TC-008"
+    ],
+    "status": "verified",
+    "source": "Software validation"
+  },
+  {
+    "id": "REQ-006",
+    "title": "Requirements traceability matrix",
+    "description": "The system shall maintain a bidirectional requirements traceability matrix linking each software requirement to one or more test cases, with live verification status.",
+    "type": "functional",
+    "priority": "shall",
+    "test_ids": [
+      "TC-009"
+    ],
+    "status": "verified",
+    "source": "Requirements management"
+  },
+  {
+    "id": "REQ-007",
+    "title": "ReqIF export",
+    "description": "The system shall export the requirements matrix in ReqIF 1.0 XML format compatible with IBM DOORS and Rational Publishing Engine.",
+    "type": "interface",
+    "priority": "shall",
+    "test_ids": [
+      "TC-010"
+    ],
+    "status": "verified",
+    "source": "Requirements interchange format"
+  },
+  {
+    "id": "REQ-008",
+    "title": "Test report generation",
+    "description": "The system shall generate a PDF test report containing flight summary statistics, anomaly log, test suite pass/fail table, and requirements coverage percentage.",
+    "type": "functional",
+    "priority": "shall",
+    "test_ids": [
+      "TC-011"
+    ],
+    "status": "verified",
+    "source": "Report generation"
+  },
+  {
+    "id": "REQ-009",
+    "title": "Mach number computation",
+    "description": "The system shall compute Mach number at each telemetry frame using standard atmosphere model with altitude-dependent speed of sound.",
+    "type": "performance",
+    "priority": "should",
+    "test_ids": [
+      "TC-012"
+    ],
+    "status": "verified",
+    "source": "Speed performance characteristics"
+  },
+  {
+    "id": "REQ-010",
+    "title": "Dynamic pressure monitoring",
+    "description": "The system should compute and monitor dynamic pressure (q-bar) throughout flight and alert when structural load limits are approached.",
+    "type": "safety",
+    "priority": "should",
+    "test_ids": [
+      "TC-013"
+    ],
+    "status": "partial",
+    "source": "Safety monitoring"
+  }
+]
